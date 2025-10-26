@@ -4,9 +4,9 @@ from openai import OpenAI
 from models.config import Config, GroqModel, OpenaiModel
 
 openai_reasoning_token_allowance: dict[OpenaiModel, int] = {
-    OpenaiModel.GPT_5: 50 * 1024,
-    OpenaiModel.GPT_5_MINI: 30 * 1024,
-    OpenaiModel.GPT_5_NANO: 20 * 1024,
+    OpenaiModel.GPT_5: 20 * 1024,
+    OpenaiModel.GPT_5_MINI: 10 * 1024,
+    OpenaiModel.GPT_5_NANO: 5 * 1024,
 }
 
 
@@ -38,6 +38,7 @@ class Inference:
             return {"temperature": 0.7, "max_tokens": 2048}
         elif self.model in OpenaiModel:
             return {
+                "reasoning_effort": "low",
                 "max_completion_tokens": 2048
                 + openai_reasoning_token_allowance[self.model],
             }
