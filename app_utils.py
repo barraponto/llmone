@@ -5,6 +5,12 @@ from inference import Inference
 from models.config import Config, GroqModel
 
 
+import logfire
+
+logfire.configure(token=os.getenv("LOGFIRE_API_KEY"))
+logfire.instrument_pydantic_ai()
+
+
 @st.cache_resource
 def get_inference(config: Config) -> Inference:
     return Inference(config=config)
