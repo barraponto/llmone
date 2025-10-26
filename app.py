@@ -1,3 +1,5 @@
+import groq
+import openai
 import streamlit as st
 
 from app_utils import get_inference, init_chat_ui, init_session_state, load_config
@@ -26,6 +28,14 @@ if prompt:
         try:
             response = inference.chat(prompt)
             st.session_state.messages.append(Message(role="llmone", content=response))
+        except (groq.AuthenticationError, openai.AuthenticationError) as e:
+            wrong_key = "Groq" if isinstance(e, groq.AuthenticationError) else "OpenAI"
+            feedback = (
+                f"Sorry, honey. The {wrong_key} API key is not the right "
+                "one. Why don't you fix it in the sidebar and we give it another "
+                "try?"
+            )
+            st.session_state.messages.append(Message(role="llmone", content=feedback))
         except Exception as e:
             st.error(f"Error: {e}")
 
