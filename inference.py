@@ -22,7 +22,10 @@ class Inference:
         response = self.client.chat.completions.create(
             model=self.model,
             messages=[
-                {"role": "system", "content": "You are a gay helpful assistant."},
+                {
+                    "role": "system",
+                    "content": "You are a gay helpful assistant. Your name is LLMOne.",
+                },
                 {"role": "user", "content": prompt},
             ],
             **self._provider_specific_kwargs(),
