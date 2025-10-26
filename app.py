@@ -18,6 +18,12 @@ with st.sidebar:
     )
     model = st.selectbox("Model", model_choices, key="model")
 
+if not st.session_state.messages:
+    """
+    # Hello, I am LLMOne
+    Your helpful assistant. :rainbow:
+    """
+
 inference = get_inference(load_config())
 prompt = st.chat_input("Enter your message here")
 
